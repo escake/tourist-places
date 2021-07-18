@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 public class PlaceService {
     private final PlaceRepository placeRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PlaceRes> getAll() {
         return placeRepository.findAll().stream().map(PlaceRes::new).collect(toUnmodifiableList());
     }
