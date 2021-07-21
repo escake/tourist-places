@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class User implements UserDetails {
     private String password;
 
     @OneToMany(cascade = ALL, mappedBy = "user", fetch = LAZY)
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
