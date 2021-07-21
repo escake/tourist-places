@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,12 @@ public class AuthService {
             throw new RuntimeException("Wrong username or password.");
         }
         return new LoginRes(token);
+    }
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found."));
     }
 
     private Authentication createAuthenticationToken(AuthReq req) {

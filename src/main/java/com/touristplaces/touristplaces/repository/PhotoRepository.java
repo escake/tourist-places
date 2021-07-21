@@ -8,4 +8,6 @@ import java.util.List;
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
     List<Photo> getAllByPlaceId(long placeId);
+
+    List<Photo> getAllByPlaceIdAndUserId(long placeId, long userId);
 }

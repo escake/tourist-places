@@ -4,12 +4,12 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @NonNull
     @Setter
     private String password;
+
+    @OneToMany(cascade = ALL, mappedBy = "user", fetch = LAZY)
+    private List<Photo> photos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -21,4 +21,9 @@ public class PhotoDto {
             this.path = photo.getPath();
         }
     }
+
+    public enum OwnedBy { // TODO add lower case mapping to enum
+        ME,
+        ALL,
+    }
 }

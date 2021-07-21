@@ -1,5 +1,6 @@
 package com.touristplaces.touristplaces.controller;
 
+import com.touristplaces.touristplaces.dto.PhotoDto.OwnedBy;
 import com.touristplaces.touristplaces.dto.PhotoDto.PhotoRes;
 import com.touristplaces.touristplaces.dto.PlaceDto.PlaceRes;
 import com.touristplaces.touristplaces.service.PhotoService;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.touristplaces.touristplaces.dto.PhotoDto.OwnedBy.ALL;
 
 @RestController
 @RequestMapping("/places")
@@ -23,8 +26,10 @@ public class PlaceController {
     }
 
     @GetMapping("/{id}/photos")
-    public List<PhotoRes> getAllPhotosByPlaceId(@PathVariable Long id) {
-        return photoService.getAllByPlaceId(id);
+    public List<PhotoRes> getAllPhotosByPlaceId(@PathVariable Long id, @RequestParam(required = false, defaultValue = "ALL") OwnedBy owner) {
+        if (owner == ALL)
+            return photoService.getAllByPlaceId(id);
+        return photoService.getAllMyPhotosByPlaceId(id);
     }
 
     @PostMapping("/{id}/photos")

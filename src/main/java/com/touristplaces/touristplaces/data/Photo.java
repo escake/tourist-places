@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -24,10 +25,14 @@ public class Photo {
     private String path;
 
     @NonNull
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @NonNull
     @Setter
     @ManyToOne
     @JoinColumn(name = "place_id", nullable = false)
     private Place place;
-
 
 }
